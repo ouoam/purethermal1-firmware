@@ -16,14 +16,13 @@ OCD ?= openocd
 CPU = -mthumb -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16
 
 DEVICE_FAMILY = STM32F4xx
-STARTUP_FILE = stm32f411xe
+STARTUP_FILE = stm32f411ceux
 DEVICE_TYPE = STM32F411xE
 SYSTEM_FILE = stm32f4xx
 
 CMSIS = Drivers/CMSIS
 CMSIS_DEVSUP = $(CMSIS)/Device/ST/$(DEVICE_FAMILY)/
 CMSIS_OPT = -D$(DEVICE_TYPE) -DUSE_HAL_DRIVER
-OTHER_OPT = "-D__weak=__attribute__((weak))" "-D__packed=__attribute__((__packed__))" 
 
 LDSCRIPT = ./STM32F411CEUx_FLASH.ld
 
@@ -54,7 +53,7 @@ LIBS += -lm
   
 # INCLUDES = -I$(SRCDIR) $(LIBINC)
 INCLUDES = $(LIBINC)
-CFLAGS  = $(CPU) $(CMSIS_OPT) $(OTHER_OPT) -Wall -fno-common -fno-short-enums -Os $(INCLUDES) -Wfatal-errors -std=c99 -DGIT_VERSION
+CFLAGS  = $(CPU) $(CMSIS_OPT) -Wall -fno-common -fno-short-enums -Os $(INCLUDES) -Wfatal-errors -std=c99 -DGIT_VERSION
 ifdef GDB_SEMIHOSTING
 	CFLAGS += -DGDB_SEMIHOSTING
 endif
@@ -73,8 +72,7 @@ ARFLAGS = cr
 OBJCOPYFLAGS = -Obinary
 OBJDUMPFLAGS = -S
 
-STARTUP_OBJ = $(CMSIS_DEVSUP)/Source/Templates/gcc/startup_$(STARTUP_FILE).o
-SYSTEM_OBJ = $(CMSIS_DEVSUP)/Source/Templates/system_$(SYSTEM_FILE).o
+STARTUP_OBJ = Startup/startup_$(STARTUP_FILE).o
 
 .PHONY: print_vars
 
@@ -83,8 +81,7 @@ BIN = main.bin
 OBJS = $(sort \
  $(patsubst %.c,%.o,$(wildcard Src/*.c)) \
  $(patsubst %.s,%.o,$(wildcard Src/*.s)) \
- $(STARTUP_OBJ) \
- $(SYSTEM_OBJ))
+ $(STARTUP_OBJ))
 
 all: $(BIN) print_vars
 
