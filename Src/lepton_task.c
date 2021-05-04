@@ -3,7 +3,7 @@
 #include "stm32f4xx_hal.h"
 #include "usb_device.h"
 
-
+#include "main.h"
 #include "pt.h"
 #include "lepton.h"
 #include "lepton_i2c.h"

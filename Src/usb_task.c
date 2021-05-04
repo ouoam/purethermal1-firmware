@@ -10,6 +10,7 @@
 #include "tmp007_i2c.h"
 #include "usbd_uvc.h"
 #include "usbd_uvc_if.h"
+#include "ugui.h"
 
 
 #include "tasks.h"

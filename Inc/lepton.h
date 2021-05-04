@@ -116,7 +116,11 @@ void lepton_transfer(lepton_buffer *buf, int nlines);
 
 void print_image_binary_background(void);
 void lepton_init(void );
+void lepton_init_nd(void );
 void lepton_deinit(void );
+void lepton_deinit_nd(void );
+
+void sleep_ms(int cnt);
 
 #endif
 
