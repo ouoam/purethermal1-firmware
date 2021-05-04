@@ -66,6 +66,7 @@ void init_lepton_task()
   }
 }
 
+#if defined(USART_DEBUG) || defined(GDB_SEMIHOSTING)
 static float k_to_c(uint16_t unitsKelvin)
 {
 	return ( ( (float)( unitsKelvin / 100 ) + ( (float)( unitsKelvin % 100 ) * 0.01f ) ) - 273.15f );
@@ -73,7 +74,6 @@ static float k_to_c(uint16_t unitsKelvin)
 
 static void print_telemetry_temps(telemetry_data_l2* telemetry)
 {
-	//
 	uint16_t fpa_temperature_k = telemetry->fpa_temp_100k[0];
 	uint16_t aux_temperature_k = telemetry->housing_temp_100k[0];
 
@@ -84,6 +84,14 @@ static void print_telemetry_temps(telemetry_data_l2* telemetry)
 		(int)(fpa_c), (int)((fpa_c-(int)fpa_c)*100),
 		(int)(aux_c), (int)((aux_c-(int)aux_c)*100));
 }
+#else
+
+static void print_telemetry_temps(telemetry_data_l2* telemetry)
+{
+
+}
+
+#endif
 
 static lepton_buffer *current_buffer = NULL;
 
@@ -101,7 +109,9 @@ PT_THREAD( lepton_task(struct pt *pt))
 
 	static uint32_t curtick = 0;
 	static uint32_t last_tick = 0;
+#ifdef PRINT_FPS
 	static uint32_t last_logged_count = 0;
+#endif
 	static uint32_t current_frame_count = 0;
 	static int transferring_timer = 0;
 	static uint8_t current_segment = 0;
@@ -271,7 +281,9 @@ PT_THREAD( lepton_task(struct pt *pt))
 #endif
 
 			last_tick = curtick;
+#ifdef PRINT_FPS
 			last_logged_count = current_frame_count;
+#endif
 		}
 
 		// Need to update completed buffer for clients?

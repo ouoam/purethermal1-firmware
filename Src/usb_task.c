@@ -51,6 +51,7 @@ static void pixel_set(UG_S16 x , UG_S16 y ,UG_COLOR c )
 }
 #endif
 
+#ifdef SPLASHSCREEN_OVERLAY
 static void draw_splash(int min, int max)
 {
 	int x_loc = 0;
@@ -144,14 +145,18 @@ static void draw_splash(int min, int max)
 	//UG_PutChar('0',x_loc,y_loc,max,min);
 
 }
+#endif
 
 PT_THREAD( usb_task(struct pt *pt))
 {
+#if defined(TMP007) && defined(TMP007_OVERLAY)
 	static int temperature;
+#endif
 	static uint16_t count = 0, i;
 
 	static uint8_t uvc_header[2] = { 2, 0 };
-	static uint32_t uvc_xmit_row = 0, uvc_xmit_plane = 0, uvc_xmit_seg = 0;
+	// static uint32_t uvc_xmit_row = 0, uvc_xmit_plane = 0, uvc_xmit_seg = 0;
+	static uint32_t uvc_xmit_row = 0, uvc_xmit_seg = 0;
 	static uint8_t packet[VIDEO_PACKET_SIZE_MAX];
 	static int image_num_segments;
 
@@ -169,7 +174,7 @@ PT_THREAD( usb_task(struct pt *pt))
 		PT_WAIT_UNTIL(pt, (last_buffer = dequeue_lepton_buffer()) != NULL);
 
 		uvc_xmit_row = 0;
-		uvc_xmit_plane = 0;
+		// uvc_xmit_plane = 0;
 
 		if (image_num_segments > 1)
 		{

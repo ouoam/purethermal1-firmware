@@ -687,7 +687,7 @@ uint8_t  USBD_UVC_TransmitPacket(USBD_HandleTypeDef *pdev)
   */
 uint8_t  USBD_UVC_ReceivePacket(USBD_HandleTypeDef *pdev)
 {      
-  USBD_UVC_HandleTypeDef   *hcdc = (USBD_UVC_HandleTypeDef*) pdev->pClassData;
+  // USBD_UVC_HandleTypeDef   *hcdc = (USBD_UVC_HandleTypeDef*) pdev->pClassData;
   
   /* Suspend or Resume USB Out process */
   if(pdev->pClassData != NULL)

@@ -389,7 +389,7 @@ LEP_RESULT LEP_GetVidTargetPosition(LEP_CAMERA_PORT_DESC_T_PTR portDescPtr,
 {
    LEP_RESULT result = LEP_OK;
    LEP_VID_BORESIGHT_COORDINATES_T boresightCoordinates;
-   LEP_VID_BORESIGHT_CALC_ENABLE_STATE_E calcEnableState;
+   // LEP_VID_BORESIGHT_CALC_ENABLE_STATE_E calcEnableState;
 
    if(targetPositionPtr == NULL)
    {

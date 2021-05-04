@@ -449,7 +449,7 @@ HAL_StatusTypeDef deinit_lepton_command_interface(void)
 
   result = LEP_ClosePort(&hport_desc);
 
-  return HAL_OK;
+  return result == LEP_OK ? HAL_OK : HAL_ERROR;
 }
 
 HAL_StatusTypeDef lepton_low_power()
